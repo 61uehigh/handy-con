@@ -192,3 +192,9 @@ progress{display:block;flex:0 0 4px;height:4px;width:100%;margin:12px 0 0}
 #manual-controls .gesture-active svg [fill="currentColor"]{fill:var(--gesture-paint)}
 #manual-controls .gesture-active svg [stroke="currentColor"]{stroke:var(--gesture-paint)}
 #manual-controls .gesture-active svg{filter:drop-shadow(0 1px 2px #174bb64d) drop-shadow(0 0 3px #2458d426)}
+
+/* Keep the info control square; hovering adds no surrounding ring. */
+.playback-controls .help-button{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;aspect-ratio:1/1;flex:0 0 40px;padding:8px;border:0;border-radius:10px;box-shadow:none}
+.playback-controls .help-button svg{display:block;width:20px;height:20px;flex:none}
+.playback-controls .help-button:hover{outline:none;border:0;box-shadow:none;background:transparent}
+.playback-controls .help-button:focus-visible{outline:2px solid #8b929b;outline-offset:2px;background:transparent}

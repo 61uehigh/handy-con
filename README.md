@@ -4,6 +4,10 @@ Your hand. Your remote.
 
 A compact Chrome extension that controls the active YouTube or Netflix video with hand gestures. Camera frames and hand recognition stay on your device.
 
+<p align="center">
+  <img src="docs/images/handycon-demo-rider-refined.png" alt="HandyCon remote recognizing a thumbs-up gesture with blue hand landmarks" width="440">
+</p>
+
 ## Install
 
 Download **HandyCon-1.0.0.zip** from [Releases](https://github.com/61uehigh/handy-con/releases/latest), unzip it, open `chrome://extensions`, enable **Developer mode**, and choose **Load unpacked**. Select the extracted folder containing `manifest.json`.
@@ -23,6 +27,10 @@ Hold each gesture for **0.25 seconds**. Either hand works.
 | Index + pinky | Toggle player fullscreen |
 
 Make a fist for 0.25 seconds or move your hand out of view for 0.45 seconds before the next command. The info tooltip shows the same guide. All controls also have manual buttons.
+
+<p align="center">
+  <img src="docs/images/handycon-demo-tooltip.png" alt="HandyCon gesture guide displayed when hovering over the info icon" width="440">
+</p>
 
 ## Behavior and permissions
 
