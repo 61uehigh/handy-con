@@ -1,0 +1,194 @@
+:root{color-scheme:dark;font-family:system-ui,sans-serif;background:#101612;color:#eef5ef}body{margin:0;padding:28px}small{color:#a3c8ab;letter-spacing:.08em}h1{font-size:34px;line-height:1.15;letter-spacing:-1.5px;margin:14px 0}header p,.note{color:#a6b4aa;font-size:13px;line-height:1.6}.preview{position:relative;background:#202e24;border-radius:18px;overflow:hidden;aspect-ratio:4/3;margin-top:24px}video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}#shape{position:absolute;left:14px;bottom:12px;background:#101612c9;padding:6px 10px;border-radius:8px;font-size:12px}progress{width:100%;height:5px;accent-color:#b6ef91}#status{font-size:13px;min-height:36px}button{background:#c4f3a4;color:#13200e;border:0;border-radius:12px;padding:12px 22px;font-weight:700;cursor:pointer}button:disabled{opacity:.4;cursor:default}dl{font-size:12px;display:grid;grid-template-columns:1.3fr 1fr;gap:12px;margin-top:24px}dt{color:#adbfb0}dd{margin:0;text-align:right}
+
+[hidden]{display:none!important}.preview video,.preview canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transform:scaleX(-1)}.preview{aspect-ratio:4/3}.preview canvas{pointer-events:none}
+
+#manual-controls button{padding:8px 10px;margin:3px;font-size:12px}
+
+/* Reserve space for changing diagnostics so the camera never shifts with text. */
+html{scrollbar-gutter:stable}
+
+#command-target{box-sizing:border-box;height:3.2em;overflow:auto;overflow-wrap:anywhere;scrollbar-gutter:stable}
+#status{box-sizing:border-box;height:4.5em;min-height:4.5em;max-height:4.5em;line-height:1.5;overflow:auto;overflow-wrap:anywhere;scrollbar-gutter:stable}
+
+#manual-controls .icon-control{display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;width:44px;height:38px;padding:7px;border-radius:14px}#manual-controls .icon-control svg{display:block;width:24px;height:24px;flex-shrink:0}#manual-controls button:focus-visible{outline:2px solid white;outline-offset:3px}
+
+/* Neutral controls; color only acknowledges a recognized hand command. */
+#manual-controls button{background:#27302b;color:#ffffff;border:1px solid #4b5650;transition:color 100ms ease,background-color 100ms ease,border-color 100ms ease}
+#manual-controls button:hover{background:#354139}
+#manual-controls button.gesture-active{color:#ffcc32;background:#494022;border-color:#ffcc32;box-shadow:0 0 0 2px #ffcc3226}
+@media(prefers-reduced-motion:reduce){#manual-controls button{transition:none}}
+
+.camera-actions{display:flex;gap:8px;align-items:center;margin:0 0 24px}
+
+.camera-switch{display:inline-flex;align-items:center;gap:14px;cursor:pointer;font-size:15px;font-weight:650;position:relative}
+.camera-switch input{position:absolute;right:0;width:52px;height:30px;margin:0;opacity:0;cursor:pointer}
+.switch-track{display:inline-block;position:relative;width:52px;height:30px;border-radius:999px;background:#3c4840;box-shadow:inset 0 0 0 1px #617067;pointer-events:none;transition:background-color 150ms ease}
+.switch-track::after{content:"";position:absolute;top:4px;left:4px;width:22px;height:22px;border-radius:50%;background:#fff;transition:transform 150ms ease}
+.camera-switch input:checked+.switch-track{background:#b6ef91;box-shadow:none}
+.camera-switch input:checked+.switch-track::after{transform:translateX(22px);background:#182412}
+.camera-switch input:focus-visible+.switch-track{outline:2px solid white;outline-offset:4px}
+#camera-state{font-size:12px;color:#a6b4aa;min-width:65px;margin-left:4px}
+@media(prefers-reduced-motion:reduce){.switch-track,.switch-track::after{transition:none}}
+
+.heading-row{display:flex;align-items:center;justify-content:space-between;gap:12px}.heading-row h1{flex:1;min-width:0}.heading-row .camera-actions{margin:0;flex:none;display:flex;flex-direction:column;gap:8px;align-items:center}.heading-row .camera-switch{flex-direction:column;gap:8px;font-size:12px}.heading-row .camera-switch input{top:auto;bottom:0;right:0}.heading-row #camera-state{margin:0;min-width:0;text-align:center}
+
+.heading-row{justify-content:flex-end}.heading-row .camera-actions{flex-direction:row;align-items:center}.heading-row .camera-switch{flex-direction:row}.heading-row .camera-switch input{top:0;bottom:auto}header{margin-bottom:20px}
+
+.help-wrap{position:relative;display:inline-flex;align-items:center}
+.help-button{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;padding:4px;border:0;background:transparent;color:#a6b4aa;border-radius:50%}
+.help-button:hover,.help-button:focus-visible{color:white;background:#2c3830;outline:2px solid #789980;outline-offset:2px}
+.help-tooltip{display:none;position:absolute;top:100%;right:-150px;width:min(360px,calc(100vw - 72px));box-sizing:border-box;max-height:65vh;overflow:auto;z-index:100;padding:18px;background:#202b24;border:1px solid #4b5c50;border-radius:14px;box-shadow:0 12px 36px #0009;color:#eef5ef}
+.help-wrap:hover .help-tooltip,.help-wrap:focus-within .help-tooltip{display:block}
+.help-tooltip .note{margin:0 0 14px;font-size:12px;line-height:1.6}.help-tooltip .note:last-child{margin-bottom:0}.help-tooltip dl{margin:12px 0 18px;gap:12px;grid-template-columns:1.4fr 1fr}.help-tooltip dd{font-size:12px}
+.help-wrap.help-dismissed .help-tooltip{display:none}
+
+.camera-symbol{display:block;flex:none;color:#eef5ef}
+.heading-row #camera-state{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;min-width:18px;margin:0;visibility:hidden;color:#c4f3a4}
+.heading-row #camera-state.is-recognizing{visibility:visible}
+.camera-spinner svg{display:block}
+.camera-spinner.is-recognizing svg{animation:camera-processing 900ms linear infinite}
+@keyframes camera-processing{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.camera-spinner.is-recognizing svg{animation:none}}
+
+#manual-controls{margin-top:16px}
+
+.camera-icon-slot{position:relative;display:inline-flex;width:22px;height:22px;align-items:center;justify-content:center;flex:none}
+.camera-icon-slot .camera-symbol{position:absolute;inset:0}
+.heading-row .camera-icon-slot #camera-state{position:absolute;inset:2px;pointer-events:none}
+.camera-icon-slot.is-loading .camera-symbol{visibility:hidden}
+
+#status:empty{display:none}
+
+.control-bar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:16px;flex-wrap:wrap}
+.control-bar #manual-controls{display:flex;align-items:center;gap:5px;margin:0}
+.control-bar #manual-controls button{margin:0}
+.utility-controls{display:flex;align-items:center;gap:10px;margin-left:auto}
+.utility-controls .camera-actions{margin:0;display:flex;align-items:center;gap:0}
+.utility-controls .camera-switch{flex-direction:row;gap:8px}
+.utility-controls #camera-state{position:absolute;inset:2px;width:18px;height:18px;min-width:18px;margin:0;visibility:hidden;pointer-events:none}
+.utility-controls #camera-state.is-recognizing{visibility:visible}
+.utility-controls .help-tooltip{top:auto;bottom:100%;right:0}
+.utility-controls .camera-switch input{top:0;bottom:auto}
+.preview{margin-top:0}
+.control-bar #manual-controls{gap:4px}
+
+/* Compact remote window: keep the complete control row visible. */
+body{padding:20px}
+
+/* Light theme */
+:root{color-scheme:light;background:#ffffff;color:#202124}
+header p,.note{color:#666b73}
+small{color:#666b73}
+.preview{background:#f0f1f3}
+#shape{background:#ffffffeb;color:#272a30;box-shadow:0 1px 6px #00000012}
+#manual-controls button{background:#f1f3f5;color:#262a30;border-color:#d8dce2}
+#manual-controls button:hover{background:#e5e8ec}
+#manual-controls button.gesture-active{background:#fff3bf;color:#7c5700;border-color:#e5b52a;box-shadow:0 0 0 2px #e5b52a26}
+#manual-controls button:focus-visible{outline-color:#414750}
+.camera-symbol{color:#414750}
+.switch-track{background:#d8dce1;box-shadow:inset 0 0 0 1px #c4c9d0}
+.switch-track::after{background:#ffffff}
+.camera-switch input:checked+.switch-track{background:#444b55;box-shadow:none}
+.camera-switch input:checked+.switch-track::after{background:#ffffff}
+.camera-switch input:focus-visible+.switch-track{outline-color:#555d68}
+.camera-spinner{color:#555d68}
+.heading-row #camera-state{color:#555d68}
+.help-button{color:#686f79}
+.help-button:hover,.help-button:focus-visible{background:#eff1f4;color:#262a30;outline-color:#8b929b}
+.help-tooltip{background:#ffffff;color:#262a30;border-color:#d8dce2;box-shadow:0 8px 28px #0000001f}
+.help-tooltip dt{color:#666b73}
+progress{accent-color:#e4b529}
+
+/* Tooltip follows the trigger but is clamped to the window, never the wrapper edge. */
+.help-wrap .help-tooltip,.help-wrap:hover .help-tooltip,.help-wrap:focus-within .help-tooltip{display:none!important;position:fixed;right:auto;bottom:auto;pointer-events:none;transition:none;animation:none;z-index:1000}
+.help-wrap .help-tooltip.is-visible{display:block!important}
+
+/* Square hit areas with transparent backgrounds and consistent icon weight. */
+#manual-controls .icon-control{box-sizing:border-box;width:40px;height:40px;aspect-ratio:1/1;flex:0 0 40px;padding:8px;margin:0;border:0;border-radius:10px;background:transparent;color:#292d33;box-shadow:none}
+#manual-controls .icon-control:hover{background:transparent;color:#000000}
+#manual-controls .icon-control.gesture-active{background:transparent;color:#d99b00;border:0;box-shadow:none}
+#manual-controls .icon-control svg{width:24px;height:24px}
+.control-bar #manual-controls{gap:6px}
+
+.help-tooltip{padding:18px!important;border-radius:14px;font-size:13px;line-height:1.5;color:#252a32}
+.help-title{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:14px;font-weight:700;margin-bottom:14px}
+.hold-badge{font-size:11px;font-weight:500;white-space:nowrap;border-radius:6px;background:#f1f3f5;color:#626976;padding:4px 7px}
+.help-tooltip .gesture-list{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:16px;row-gap:0;margin:0 0 16px}
+.help-tooltip .gesture-list dt,.help-tooltip .gesture-list dd{padding:8px 0;margin:0;border-bottom:1px solid #edf0f3;font-size:13px;line-height:1.5}
+.help-tooltip .gesture-list dt{color:#646b76}.help-tooltip .gesture-list dd{color:#252a32;font-weight:600;text-align:right}
+.help-tooltip .gesture-list dt:nth-last-of-type(1),.help-tooltip .gesture-list dd:last-child{border-bottom:0}
+.help-reset{padding:11px 12px;border-radius:9px;background:#f5f6f8;color:#4e5662}
+.help-reset strong{font-size:12px;font-weight:650;color:#343b46}.help-reset p{font-size:12px;line-height:1.6;margin:4px 0 0}
+.help-footnote{font-size:11px;line-height:1.65;color:#838a94;margin:12px 0 0}
+
+/* Camera and loading indicator travel inside the switch thumb. */
+.utility-controls .camera-switch{gap:0}
+.switch-track{width:56px;height:32px;display:block}
+.switch-track::after{display:none}
+.switch-thumb{position:absolute;left:3px;top:3px;width:26px;height:26px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:#fff;box-shadow:0 1px 3px #0002;transition:transform 150ms ease;color:#5d6570}
+.camera-switch input:checked+.switch-track .switch-thumb{transform:translateX(24px)}
+.utility-controls .camera-switch input{width:56px;height:32px}
+.switch-thumb .camera-icon-slot{width:18px;height:18px}
+.switch-thumb .camera-symbol{width:18px;height:18px;color:#4c5562}
+.utility-controls .switch-thumb #camera-state{inset:0;width:18px;height:18px;min-width:18px;color:#4c5562}
+@media(prefers-reduced-motion:reduce){.switch-thumb{transition:none}}
+
+.playback-controls{display:flex;align-items:center;gap:6px}
+.playback-controls .help-button{width:32px;height:40px;flex:none}
+.playback-controls .help-tooltip{top:auto;bottom:auto;right:auto}
+.control-bar{flex-wrap:nowrap}
+.utility-controls{margin-left:auto;flex:none}
+
+#camera-off{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:1;color:#a4aab3;pointer-events:none}
+#camera-off svg{display:block;width:56px;height:56px}
+
+#camera-loading{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;color:#767f8b;pointer-events:none}
+#camera-loading svg{display:block;animation:camera-processing 900ms linear infinite}
+@media(prefers-reduced-motion:reduce){#camera-loading svg{animation:none}}
+
+#camera-loading svg{width:56px;height:56px}
+
+#command-target{height:78px;box-sizing:border-box;overflow:hidden;margin:16px 0 0;display:flex;flex-direction:column;gap:6px}
+.target-label{font-size:10px;line-height:1.4;font-weight:500;color:#9299a3;flex:none}
+#target-title{font-size:13px;line-height:1.5;font-weight:600;color:#313740;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;overflow-wrap:anywhere}
+
+.help-tooltip .gesture-list .gesture-symbol{font-size:20px;line-height:1}
+
+.help-tooltip{padding:14px!important;overflow:hidden;max-height:none;font-size:12px}
+.help-title{margin-bottom:8px;font-size:13px}
+.help-tooltip .gesture-list{margin:0 0 8px;column-gap:14px}
+.help-tooltip .gesture-list dt,.help-tooltip .gesture-list dd{padding:5px 0;font-size:12px;line-height:1.4}
+.help-compact-reset{margin:0;padding-top:8px;border-top:1px solid #e9edf1;color:#6c7480;font-size:11px;line-height:1.5}
+
+/* Recognition uses the app icon's sapphire-blue light, without a button fill. */
+#manual-controls .icon-control.gesture-active{color:#176bdf;background:transparent;box-shadow:none}
+#manual-controls .gesture-active svg [fill="currentColor"]{fill:var(--gesture-paint)}
+#manual-controls .gesture-active svg [stroke="currentColor"]{stroke:var(--gesture-paint)}
+#manual-controls .gesture-active svg{filter:drop-shadow(0 0 2px #2475ed26)}
+
+/* Active gesture: sapphire surface, white glyph. */
+#manual-controls .icon-control.gesture-active{color:#ffffff;background:linear-gradient(135deg,#1765e8 0%,#2458d4 42%,#102a79 100%);box-shadow:inset 0 1px 0 #ffffff24,0 2px 5px #173d8a20}
+#manual-controls .gesture-active svg [fill="currentColor"]{fill:#ffffff}
+#manual-controls .gesture-active svg [stroke="currentColor"]{stroke:#ffffff}
+#manual-controls .gesture-active svg{filter:none}
+
+/* Fit the complete remote into the popup rather than scrolling the page. */
+html{height:100%;overflow:hidden;scrollbar-gutter:auto}
+body{box-sizing:border-box;height:100dvh;min-height:0;padding:20px;overflow:hidden}
+main{height:100%;min-height:0;display:flex;flex-direction:column}
+.preview{flex:1 1 auto;min-height:100px;aspect-ratio:auto!important;margin:0}
+.control-bar{flex:0 0 auto;margin-top:14px}
+progress{display:block;flex:0 0 4px;height:4px;width:100%;margin:12px 0 0}
+#command-target{flex:0 0 64px;height:64px;min-height:0;margin:12px 0 0;gap:5px}
+#status{flex:0 0 auto;height:auto;min-height:0;max-height:60px;margin:8px 0 0;overflow:auto}
+#status:empty{display:none}
+
+#manual-controls .icon-control.gesture-active{background:linear-gradient(135deg,#1765e8 0%,#2458d4 42%,#102a79 100%);box-shadow:inset 0 1px 0 #ffffff24,0 2px 5px #173d8a20}
+
+.camera-switch input:checked+.switch-track{background:linear-gradient(135deg,#1765e8 0%,#2458d4 42%,#102a79 100%);box-shadow:inset 0 1px 0 #ffffff24}
+
+/* Recognition colors the glyph, with a restrained sapphire-blue shadow. */
+#manual-controls .icon-control.gesture-active{color:#2458d4;background:transparent;border:0;box-shadow:none}
+#manual-controls .gesture-active svg [fill="currentColor"]{fill:var(--gesture-paint)}
+#manual-controls .gesture-active svg [stroke="currentColor"]{stroke:var(--gesture-paint)}
+#manual-controls .gesture-active svg{filter:drop-shadow(0 1px 2px #174bb64d) drop-shadow(0 0 3px #2458d426)}

@@ -1,0 +1,9 @@
+{
+  "name": "gesture-remote",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  },
+  "version": "1.0.0"
+}

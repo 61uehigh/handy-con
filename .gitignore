@@ -1,0 +1,11 @@
+.DS_Store
+dist/
+node_modules/
+# Local artwork experiments and unused model assets are not release source.
+icons/*
+!icons/icon-16.png
+!icons/icon-32.png
+!icons/icon-48.png
+!icons/icon-128.png
+!icons/icon-512.png
+vendor/hand_landmarker.task
